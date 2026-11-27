@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: astra-os
+    runtime: python
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt && cd backend && python scripts/download_ephemeris.py
+    startCommand: cd backend && uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: ASTRA_ENV
+        value: production
+      - key: ASTRA_SECRET_KEY
+        generateValue: true
+      - key: ASTRA_DATABASE_URL
+        sync: false
+      - key: ASTRA_GEOCODER_PROVIDER
+        value: mapbox
+      - key: ASTRA_FRONTEND_ORIGIN
+        value: https://astraos.run.place
+      - key: ASTRA_FREE_CHART_LIMIT
+        value: "3"

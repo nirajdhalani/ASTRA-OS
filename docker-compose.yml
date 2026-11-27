@@ -1,0 +1,13 @@
+services:
+  astra-os:
+    build: .
+    env_file:
+      - backend/.env
+    environment:
+      ASTRA_DATABASE_URL: sqlite:////app/backend/data/astra.db
+      ASTRA_EPHEMERIS_DIR: /app/backend/data/ephemeris
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/data:/app/backend/data
+    restart: unless-stopped

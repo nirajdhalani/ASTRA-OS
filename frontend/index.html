@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101722" />
+  <meta name="description" content="ASTRA OS — an evidence-linked Vedic and Western astrology chart workspace." />
+  <title>ASTRA OS — Astrology Intelligence</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div id="app" class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">✦</span><span><b>ASTRA</b><small>ASTROLOGY INTELLIGENCE</small></span></a>
+      <div class="sidebar-kicker" data-i18n="workspace">WORKSPACE</div>
+      <nav class="nav-list">
+        <button class="nav-item active" data-tab="overview"><span>◈</span><label data-i18n="overview">Overview</label></button>
+        <button class="nav-item" data-tab="birth"><span>☼</span><label data-i18n="birthChart">Birth chart</label></button>
+        <button class="nav-item" data-tab="life"><span>✧</span><label data-i18n="lifeAnalysis">Life analysis</label></button>
+        <button class="nav-item" data-tab="periods"><span>◷</span><label data-i18n="periods">Planetary periods</label></button>
+        <button class="nav-item" data-tab="divisional"><span>⌘</span><label data-i18n="divisional">Divisional charts</label></button>
+        <button class="nav-item" data-tab="saved"><span>▤</span><label data-i18n="savedCharts">Saved charts</label></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="engine-pill"><span class="status-dot"></span><span><b>Calculation engine</b><small>JPL DE440s · local rules</small></span></div>
+        <button id="logoutButton" class="text-button" hidden data-i18n="signOut">Sign out</button>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div><div class="eyebrow" data-i18n="workspaceLabel">YOUR PERSONAL ASTROLOGY WORKSPACE</div><h1 id="pageTitle" data-i18n="overview">Overview</h1></div>
+        <div class="top-actions"><select id="localeSelect" aria-label="Language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="gu">ગુજરાતી</option></select><button id="upgradeButton" class="secondary-button">Upgrade Pro</button><button id="accountButton" class="avatar-button" title="Account">G</button></div>
+      </header>
+
+      <section id="authPanel" class="auth-panel card">
+        <div class="auth-copy"><div class="eyebrow">ASTRA OS / ACCESS</div><h2 data-i18n="welcome">A clearer map of your chart.</h2><p data-i18n="authBlurb">Create an account or sign in to save birth charts and explore the calculations.</p></div>
+        <form id="authForm" class="auth-form">
+          <div class="auth-switch"><button type="button" id="showLogin" class="selected" data-i18n="signIn">Sign in</button><button type="button" id="showRegister" data-i18n="createAccount">Create account</button></div>
+          <label><span data-i18n="email">Email</span><input id="emailInput" type="email" autocomplete="email" required placeholder="you@example.com" /></label>
+          <label><span data-i18n="password">Password</span><input id="passwordInput" type="password" autocomplete="current-password" required minlength="10" placeholder="At least 10 characters" /></label>
+          <button class="primary-button full" type="submit" id="authSubmit" data-i18n="signIn">Sign in</button>
+          <p id="authMessage" class="form-message"></p>
+        </form>
+      </section>
+
+      <section id="workspace" hidden>
+        <section id="overviewPanel" class="tab-panel">
+          <div class="hero-card">
+            <div class="hero-orbit orbit-one"></div><div class="hero-orbit orbit-two"></div>
+            <div class="hero-content"><div class="eyebrow gold" data-i18n="chartWorkspace">CHART WORKSPACE</div><h2 data-i18n="heroTitle">Your chart, calculated.<br/>Your story, explored.</h2><p data-i18n="heroBody">Start with birth details. ASTRA calculates planetary positions and shows the traditional rules behind each interpretation.</p><button class="primary-button" data-action="new-chart" data-i18n="createBirthChart">Create birth chart <span>↗</span></button></div>
+            <div class="hero-celestial"><div class="celestial-ring ring-a"></div><div class="celestial-ring ring-b"></div><div class="celestial-core">✦</div><span class="star s1">✧</span><span class="star s2">✦</span><span class="star s3">✧</span></div>
+          </div>
+          <div class="section-heading"><div><div class="eyebrow" data-i18n="workspace">WORKSPACE</div><h2 data-i18n="quickStart">Quick start</h2></div></div>
+          <div class="feature-grid">
+            <button class="feature-card" data-action="new-chart"><span class="feature-icon">☼</span><b data-i18n="newChart">New birth chart</b><small data-i18n="newChartDesc">Enter date, time and birthplace</small><span class="feature-arrow">↗</span></button>
+            <button class="feature-card" data-tab="saved"><span class="feature-icon">▤</span><b data-i18n="savedCharts">Saved charts</b><small data-i18n="savedDesc">Reopen a previous chart</small><span class="feature-arrow">↗</span></button>
+            <button class="feature-card" data-tab="life"><span class="feature-icon">✧</span><b data-i18n="lifeAnalysis">Life analysis</b><small data-i18n="lifeDesc">Review all chart domains</small><span class="feature-arrow">↗</span></button>
+          </div>
+          <div class="section-heading"><div><div class="eyebrow" data-i18n="recent">RECENT</div><h2 data-i18n="recentCharts">Recent charts</h2></div><button class="text-button" data-tab="saved" data-i18n="viewAll">View all</button></div>
+          <div id="recentList" class="saved-list"><div class="empty-state" data-i18n="noCharts">No saved charts yet. Create your first birth chart.</div></div>
+        </section>
+
+        <section id="birthPanel" class="tab-panel" hidden>
+          <div class="page-intro"><div><div class="eyebrow" data-i18n="birthData">BIRTH DATA</div><h2 data-i18n="birthFormTitle">Create a birth chart</h2><p data-i18n="birthFormBody">Use the recorded local birth time and the actual birthplace. The timezone is resolved for that date.</p></div><span class="step-mark">01 / 03</span></div>
+          <form id="birthForm" class="birth-form card">
+            <div class="form-grid">
+              <label class="field"><span data-i18n="profileName">Chart name</span><input id="labelInput" maxlength="120" value="My birth chart" required /></label>
+              <label class="field"><span data-i18n="birthDate">Date of birth</span><input id="dateInput" type="date" required /></label>
+              <label class="field"><span data-i18n="birthTime">Time of birth</span><input id="timeInput" type="time" required /></label>
+              <label class="field field-wide"><span data-i18n="birthPlace">Birthplace</span><div class="input-with-button"><input id="placeInput" autocomplete="off" placeholder="City, region, country" required /><button type="button" id="searchPlace" class="secondary-button" data-i18n="findPlace">Find place</button></div><div id="placeResults" class="place-results" hidden></div><small class="field-hint" data-i18n="placeHint">Choose the correct result; historical timezone data will be applied.</small><small id="geoAttribution" class="field-hint" hidden></small></label>
+              <label class="field"><span data-i18n="latitude">Latitude</span><input id="latitudeInput" type="number" step="any" min="-90" max="90" placeholder="e.g. 21.52" required /></label>
+              <label class="field"><span data-i18n="longitude">Longitude</span><input id="longitudeInput" type="number" step="any" min="-180" max="180" placeholder="e.g. 70.46" required /></label>
+              <label class="field"><span data-i18n="timezone">IANA timezone</span><input id="timezoneInput" placeholder="Asia/Kolkata" required /></label>
+              <label class="field"><span data-i18n="timeFold">Clock-change occurrence</span><select id="foldInput"><option value="">Automatic / not applicable</option><option value="0">Earlier occurrence (fold 0)</option><option value="1">Later occurrence (fold 1)</option></select></label>
+              <label class="field"><span data-i18n="astroSystem">Astrology system</span><select id="systemInput"><option value="vedic">Vedic Jyotish</option><option value="western">Western Tropical</option><option value="kp">Krishnamurti Paddhati (KP)</option><option value="jaimini">Jaimini</option></select></label>
+              <label class="field"><span data-i18n="ayanamsa">Ayanamsa</span><select id="ayanamsaInput"><option value="lahiri">Lahiri / Chitrapaksha</option><option value="kp">KP</option><option value="raman">B. V. Raman</option><option value="fagan_bradley">Fagan–Bradley</option><option value="tropical">Tropical</option></select></label>
+              <label class="field"><span data-i18n="houseSystem">House system</span><select id="houseInput"><option value="">System default</option><option value="whole_sign">Whole Sign</option><option value="equal">Equal</option><option value="placidus">Placidus</option></select></label>
+              <label class="field"><span data-i18n="reportLanguage">Report language</span><select id="reportLocale"><option value="en">English</option><option value="hi">हिन्दी</option><option value="gu">ગુજરાતી</option></select></label>
+            </div>
+            <div class="form-footer"><p class="muted" data-i18n="ephemerisRange">JPL DE440s coverage: approximately 1849–2150.</p><button type="submit" id="generateButton" class="primary-button" data-i18n="generateChart">Generate complete chart <span>↗</span></button></div>
+          </form>
+          <div id="chartError" class="alert error" hidden></div>
+        </section>
+
+        <section id="chartPanel" class="tab-panel" hidden>
+          <div class="page-intro chart-title-row"><div><div class="eyebrow" data-i18n="chartResult">CHART RESULT</div><h2 id="chartName">Birth chart</h2><p id="chartBirthLine" class="muted"></p></div><div class="chart-actions"><button class="secondary-button" id="saveChartButton" data-i18n="saveChart">Save chart</button><button class="primary-button" data-action="new-chart" data-i18n="newChart">New chart</button></div></div>
+          <div id="chartQuality" class="quality-strip"></div>
+          <div class="chart-tabs"><button class="selected" data-chart-tab="summary" data-i18n="summary">Summary</button><button data-chart-tab="planets" data-i18n="planets">Planets</button><button data-chart-tab="houses" data-i18n="houses">Houses</button><button data-chart-tab="aspects" data-i18n="aspects">Aspects</button></div>
+          <div id="chartSummary" class="chart-subpanel"></div>
+          <div id="chartPlanets" class="chart-subpanel" hidden></div>
+          <div id="chartHouses" class="chart-subpanel" hidden></div>
+          <div id="chartAspects" class="chart-subpanel" hidden></div>
+        </section>
+
+        <section id="lifePanel" class="tab-panel" hidden><div class="page-intro"><div><div class="eyebrow" data-i18n="evidenceReport">EVIDENCE REPORT</div><h2 data-i18n="lifeAnalysis">Life analysis</h2><p data-i18n="lifeIntro">Chart factors are grouped by life area with supporting and challenging evidence.</p></div></div><div id="lifeReports" class="domain-grid"></div></section>
+        <section id="periodsPanel" class="tab-panel" hidden><div class="page-intro"><div><div class="eyebrow" data-i18n="timing">TIMING</div><h2 data-i18n="periods">Planetary periods</h2><p data-i18n="periodIntro">Vimshottari timing is calculated from the sidereal Moon's nakshatra.</p></div></div><div id="periodReport"></div></section>
+        <section id="divisionalPanel" class="tab-panel" hidden><div class="page-intro"><div><div class="eyebrow" data-i18n="vargaAnalysis">VARGA ANALYSIS</div><h2 data-i18n="divisional">Divisional charts</h2><p data-i18n="vargaIntro">Select a varga to inspect its sign placements.</p></div></div><div id="vargaReport"></div></section>
+        <section id="savedPanel" class="tab-panel" hidden><div class="page-intro"><div><div class="eyebrow" data-i18n="library">LIBRARY</div><h2 data-i18n="savedCharts">Saved charts</h2><p data-i18n="savedIntro">Charts saved to your account.</p></div><button class="primary-button" data-action="new-chart" data-i18n="newChart">New chart</button></div><div id="savedChartsList" class="saved-list"></div></section>
+      </section>
+      <footer class="app-footer"><span>ASTRA OS · 0.1.1</span><span data-i18n="footerNote">Astrology is an interpretive tradition; chart calculations do not prove future events.</span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
